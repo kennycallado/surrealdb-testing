@@ -1,0 +1,101 @@
+#V2
+DEFINE EVENT user_log ON TABLE users WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN (\n  CREATE logs SET index = $value, event = $event, time = time::now()\n);\n
+select * from logs;
+DEFINE EVENT user_log ON TABLE users WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN (\n  CREATE logs SET index = $value.id, event = $event, time = time::now()\n);\n
+select * from logs;
+DEFINE FIELD index ON logs TYPE record;\nDEFINE FIELD event ON logs TYPE string;\nDEFINE FIELD time  ON logs TYPE datetime;\n
+select * from logs;
+DEFINE TABLE logs SCHEMAFULL PERMISSIONS NONE;\n\nDEFINE FIELD index ON logs TYPE record;\nDEFINE FIELD event ON logs TYPE string;\nDEFINE FIELD time  ON logs TYPE datetime;\n
+select * from logs;
+-- table\nDEFINE TABLE media SCHEMAFULL PERMISSIONS NONE;\n\n-- fields\nDEFINE FIELD name ON TABLE media TYPE string;\nDEFINE FIELD url  ON TABLE media TYPE string ASSERT string::is::url($value);\nDEFINE FIELD type ON TABLE media TYPE string ASSERT $value INSIDE ['image', 'video'];\n
+-- table\nDEFINE TABLE resources SCHEMAFULL PERMISSIONS NONE;\n-- FOR SELECT WHERE $auth.id;\n\n-- fields\nDEFINE FIELD title        ON TABLE resources TYPE string;\nDEFINE FIELD description  ON TABLE resources TYPE string;\nDEFINE FIELD type         ON TABLE resources TYPE string ASSERT $value INSIDE ['slides','module','form','external'];\nDEFINE FIELD slides       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'slides';\nDEFINE FIELD module       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'module';\nDEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>> ASSERT $value IS None OR type = 'form';\n
+sleep 1s;
+sleep 1m;
+exit
+create questions content { question: {locale: 'es', content: '¿Cómo te llamas?'}}
+create questions content { question: [{locale: 'es', content: '¿Cómo te llamas?'}]}
+CREATE questions CONTENT {\n  question: [ {\n    locale: 'en',\n    content: 'What is your name?'\n  },{\n    locale: 'fr',\n    content: 'Quel est votre nom?'\n  } ]\n}\n
+DEFINE TABLE questions SCHEMALESS PERMISSIONS\n  FOR select WHERE $auth.id;
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id;\n
+DEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+DEFINE SCOPE user SESSION 1d
+DEFINE SCOPE user SESSION 1d\n  SIGNUP (CREATE users SET email = $email, pass = crypto::argon2::generate($pass), name = $name, active = true, project = $project, created = time::now())\n  SIGNIN (SELECT * FROM users WHERE email = $email AND crypto::argon2::compare(pass, $pass));\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+select * from questions:qjjup51nqfaib9d5gn3d
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id OR $auth.admin;\n\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+select * from questions:8mw7bro6y99f6du2k06n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id OR $auth.admin;\n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id;\n
+DEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+CREATE questions content { question: [{locale: 'es', content: 'bla'}]}
+DEFINE FIELD questions.question ON TABLE questions TYPE array;\nDEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array<object>;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+-- table\nDEFINE TABLE questions SCHEMAFULL PERMISSIONS NONE;\n\n-- fields\nDEFINE FIELD question.* ON TABLE questions TYPE array;\nDEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question.* ON TABLE questions TYPE object;\nDEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS NONE;\n\n-- fields\nDEFINE FIELD questions.* ON TABLE questions TYPE object;\nDEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question.locale ON TABLE questions TYPE object;\nDEFINE FIELD question.content ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE string;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question.*.locale ON TABLE questions TYPE object;\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE object;\n\nDEFINE FIELD question.*.locale ON TABLE questions TYPE object;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE object;\n\nDEFINE FIELD question.*.locale ON TABLE questions TYPE string;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+-- table\nDEFINE TABLE questions SCHEMAFULL PERMISSIONS NONE;\n\n-- fields\nDEFINE FIELD question ON TABLE questions TYPE array;\nDEFINE FIELD question.* ON TABLE questions TYPE object;\n\nDEFINE FIELD question.*.locale ON TABLE questions TYPE string;\nDEFINE FIELD question.*.content ON TABLE questions TYPE string;\n
+create questions content {\n  question: [ {\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+DEFINE SCOPE user SESSION 1d\n  SIGNUP (CREATE users SET email = $email, pass = crypto::argon2::generate($pass), name = $name, active = true, project = $project, created = time::now())\n  SIGNIN (SELECT * FROM users WHERE email = $email AND crypto::argon2::compare(pass, $pass));\n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id;\n
+DEFINE TABLE slides SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n
+select 
+select * from questions;
+CREATE slides CONTENT {\n  title: 'slide 1',\n  content: 'blah blah',\n  type: 'input',\n  question: 'questions:zrzf3sabz08h375peqfv'\n}\n
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n
+select * from slides;
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n\n-- fields\nDEFINE FIELD title        ON TABLE resources TYPE string;\nDEFINE FIELD description  ON TABLE resources TYPE string;\nDEFINE FIELD type         ON TABLE resources TYPE string ASSERT $value INSIDE ['slides','module','form','external'];\nDEFINE FIELD slides       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'slides';\nDEFINE FIELD module       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'module';\nDEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>> ASSERT $value IS None OR type = 'form';\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'slides',\n  slides: ['slides:aj0w7m85omsoqekh3vg7']\n}
+SELECT * FROM resources FETCH slides\n
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n\n-- fields\nDEFINE FIELD title        ON TABLE resources TYPE string;\nDEFINE FIELD description  ON TABLE resources TYPE string;\nDEFINE FIELD type         ON TABLE resources TYPE string ASSERT $value INSIDE ['slides','module','form','external'];\nDEFINE FIELD slides       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'slides';\nDEFINE FIELD module       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'module';\nDEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>> ASSERT $value IS None OR type = 'form';\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'slides',\n  slides: ['slides:aj0w7m85omsoqekh3vg7']\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'slides',\n  slides: [slides:aj0w7m85omsoqekh3vg7]\n}\n
+select * from slides;
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'slides',\n  slides: 'slides:aj0w7m85omsoqekh3vg7'\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: ['slides:aj0w7m85omsoqekh3vg7']\n}\n
+DEFINE TABLE questions SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id;\n
+DEFINE TABLE slides SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS\n  FOR SELECT WHERE $auth.id;\n
+select * from quetions;
+select * from slides;
+create questions content {\n  question: [ {\n    locale: 'es',\n    content: '¿Cómo te llamas?'\n  },{\n    locale: 'en',\n    content: 'what is your name?'\n  },{\n    locale: 'fr',\n    content: 'quel est votre nom?'\n  } ]\n}\n
+select * from questions
+CREATE slides CONTENT {\n  title: 'slide 1',\n  content: 'blah blah',\n  type: 'input',\n  question: 'questions:zs2loj0l15r4n9why66o'\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: ['slides:nbacq4r0fpdwl0xtl91g']\n}\n
+select * from questions
+select * from slides;
+select * from resources
+DEFINE FIELD slides       ON TABLE resources TYPE option<array<record<slides>>>;\nDEFINE FIELD module       ON TABLE resources TYPE option<array<record<slides>>>;\nDEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>>;\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: ['slides:nbacq4r0fpdwl0xtl91g']\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: [slides:nbacq4r0fpdwl0xtl91g]\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: [nbacq4r0fpdwl0xtl91g]\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'module',\n  module: [slides:nbacq4r0fpdwl0xtl91g]\n}\n
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS NONE;\n
+remove table resources
+select * from resources
+DEFINE TABLE resources SCHEMAFULL PERMISSIONS\n  FOR select WHERE $auth.id;\n\n-- fields\nDEFINE FIELD title        ON TABLE resources TYPE string;\nDEFINE FIELD description  ON TABLE resources TYPE string;\nDEFINE FIELD type         ON TABLE resources TYPE string ASSERT $value INSIDE ['slides','module','form','external'];\nDEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>> ASSERT $value IS None OR type = 'form';\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'form',\n  form: [questions:zs2loj0l15r4n9why66o]\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'form',\n  form: ['questions:zs2loj0l15r4n9why66o'],\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'form',\n  form: ['questions:zs2loj0l15r4n9why66o']\n}\n
+CREATE resources CONTENT {\n  title: 'Introduction to the course',\n  description: 'Description very well',\n  type: 'form',\n  form: ['questions:zs2loj0l15r4n9why66o','questions:lkasjdf']\n}\n

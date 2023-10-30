@@ -1,0 +1,52 @@
+---
+---
+
+GET http://root:root@localhost:8000/export
+Accept: application/json
+Content-Type: application/json
+NS: test
+DB: base
+
+POST http://localhost:8000/signup
+Accept: application/json
+
+{
+  "ns": "test",
+  "db": "base",
+  "sc": "user",
+  "project": "projects:qzq2vpdytdh89cgy4ge7",
+  "name": "Kenny Callado",
+  "email": "kenny@callado.es",
+  "pass": "kenny"
+}
+
+POST http://localhost:8000/signin
+Accept: application/json
+
+{
+  "ns": "test",
+  "db": "base",
+  "sc": "user",
+  "email": "kenny@callado.es",
+  "pass": "kenny"
+}
+
+GET http://localhost:8000/key/questions/
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTg2MDQ5NzUsIm5iZiI6MTY5ODYwNDk3NSwiZXhwIjoxNjk4NjkxMzc1LCJpc3MiOiJTdXJyZWFsREIiLCJOUyI6InRlc3QiLCJEQiI6ImJhc2UiLCJTQyI6InVzZXIiLCJJRCI6InVzZXJzOjVrMHFpemV6aTZwZnBldHVzOHIyIn0.QvhlguuXHkxfYhN-xN-npe19aPn8pUekniCBHjR6Ek8qeELn7G01taR21vXyiiQb9iiOXmgyNRRzz9dQlTmNiw
+
+GET http://localhost:8000/key/resources/op353cup3abeerg1jskp
+Accept: application/json
+Authorization: Bearer 
+
+
+curl -sSL --compressed -X 'POST' -H 'NS: test' -H 'DB: base' -H 'Accept: application/json' -H 'Authorization: Bearer '
+
+# POST http://root:root@localhost:8000/sql
+# Accept: application/json
+# NS: test
+# DB: base
+
+# {
+#   "sql": "SELECT * FROM resources FETCH slides"
+# }
