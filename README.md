@@ -1,4 +1,16 @@
 
+## server
+
+``` bash
+surreal start memory --no-banner -A --auth --user root --pass root
+```
+
+## sql
+
+``` bash
+surreal sql -u root -p root --pretty --namespace test --database base
+```
+
 ## import
 
 ### init file
