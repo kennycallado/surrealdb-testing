@@ -3,8 +3,6 @@ DEFINE TABLE records SCHEMALESS PERMISSIONS NONE;
 
 -- fields
 
--- relations
+-- indexes
 
 -- events
-
--- indexes

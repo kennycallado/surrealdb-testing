@@ -15,8 +15,6 @@ DEFINE FIELD slides ON TABLE resources TYPE option<array<record<slides>>>;
 -- DEFINE FIELD module       ON TABLE resources TYPE option<array<record<slides>>> ASSERT $value IS None    OR type = 'module';
 -- DEFINE FIELD form         ON TABLE resources TYPE option<array<record<questions>>> ASSERT $value IS None OR type = 'form';
 
--- relations
+-- indexes
 
 -- events
-
--- indexes

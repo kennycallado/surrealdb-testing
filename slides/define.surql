@@ -9,8 +9,6 @@ DEFINE FIELD media    ON TABLE slides TYPE option<record<media>>;
 DEFINE FIELD type     ON TABLE slides TYPE string ASSERT $value INSIDE ['content', 'input'];
 DEFINE FIELD question ON TABLE slides TYPE option<record<questions>> ASSERT $value IS None OR type = 'input';
 
--- relations
+-- indexes
 
 -- events
-
--- indexes

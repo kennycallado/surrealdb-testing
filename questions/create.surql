@@ -1,21 +1,21 @@
-create questions content {
+CREATE questions CONTENT {
+  type: 'input',
   question: [ {
+    locale: 'vl',
+    content: 'Com et diuen?'
+  },{
     locale: 'es',
     content: '¿Cómo te llamas?'
   },{
     locale: 'en',
     content: 'what is your name?'
-  },{
-    locale: 'fr',
-    content: 'quel est votre nom?'
   } ]
 }
 
+-- error: only allowd ['vl', 'es', 'en']
 UPDATE <id> CONTENT {
+  type: 'range',
   question: [ {
-    locale: 'en',
-    content: 'What is your name?'
-  },{
     locale: 'fr',
     content: 'Quel est votre nom?'
   },{

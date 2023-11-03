@@ -7,10 +7,8 @@ DEFINE FIELD project    ON TABLE papers TYPE record<project>;
 DEFINE FIELD resource   ON TABLE papers TYPE record<resource>;
 DEFINE FIELD completed  ON TABLE papers TYPE bool DEFAULT false;
 
--- relations
+-- indexes
 
 -- events
  -- usuario recibe paper
  -- usuario push paper
-
--- indexes
