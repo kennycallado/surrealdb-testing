@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Development server</title>
+	</head>
+	<body>
+		<p>Open a console to access the Surreal class!</p>
+		<script type="module">
+			// import Surreal from './lib/full.js';
+      import { Surreal } from 'https://unpkg.com/surrealdb.wasm/lib/full.js';
+
+			if (typeof window !== 'undefined') {
+				window.Surreal = Surreal;
+			}
+
+      let db = new Surreal();
+
+      try {
+        await db.connect('indxdb://MyDatabase');
+        await db.use({ ns: 'test', db: 'base'});
+
+        let created = await db.create("person", {
+          title: "Founder & CEO",
+          name: {
+            first: "Tobie",
+            last: "Morgan Hitchcock",
+          },
+          marketing: true,
+          identifier: Math.random().toString(36).substr(2, 10),
+        })
+
+        console.log(created);
+      } catch (e) {
+        	console.log(e);
+      }
+      
+		</script>
+	</body>
+</html>
