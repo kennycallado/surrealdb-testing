@@ -13,6 +13,9 @@
     <p><button onclick="nonPersistentNotification()">Non-persistent notification</button></p>
     <p><button onclick="persistentNotification()">Persistent notification</button></p>
 
+    <h2>Questions</h2>
+    <button onclick="show_questions()">Show questions</button>
+
     <script>
       var $status = document.getElementById('status');
 
@@ -68,27 +71,66 @@
 				window.Surreal = Surreal;
 			}
 
-      let db = new Surreal();
+      let inner_db = new Surreal();
+      let outer_db = new Surreal();
+
+      let questions;
 
       try {
-        await db.connect('indxdb://MyDatabase');
-        await db.use({ ns: 'test', db: 'base'});
+        await outer_db.connect('ws://localhost:8000/rcp')
+        const token = await outer_db.signin({
+          namespace: 'test',
+          database: 'base',
+          scope: 'user',
+          email: 'kenny@callado.es',
+          pass: 'kenny'
+        })
+        await outer_db.authenticate(token)
 
-        let created = await db.create("person", {
-          title: "Founder & CEO",
-          name: {
-            first: "Tobie",
-            last: "Morgan Hitchcock",
-          },
-          marketing: true,
-          identifier: Math.random().toString(36).substr(2, 10),
+        questions = await outer_db.select("questions")
+
+      } catch (e) {
+        console.log(e);
+      }
+
+      try {
+        await inner_db.connect('indxdb://MyDatabase');
+        await inner_db.use({ ns: 'test', db: 'base'});
+
+        let created = await inner_db.update(questions[0].id, {
+          type: questions[0].type,
+          question: questions[0].question,
         })
 
-        console.log(created);
+        let select = await inner_db.select("questions")
+
+        // let created = await inner_db.create("person", {
+        //   title: "Founder & CEO",
+        //   name: {
+        //     first: "Tobie",
+        //     last: "Morgan Hitchcock",
+        //   },
+        //   marketing: true,
+        //   identifier: Math.random().toString(36).substr(2, 10),
+        // })
+
+        console.log(select);
       } catch (e) {
         	console.log(e);
       }
-      
 		</script>
+
+    <script>
+      async function show_questions() {
+        let inner_db = new Surreal();
+
+        await inner_db.connect('indxdb://MyDatabase')
+        await inner_db.use({ ns: 'test', db: 'base'})
+
+        let select = await inner_db.select("questions")
+        console.log(select)
+      }
+    </script>
+
 	</body>
 </html>
