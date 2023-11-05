@@ -8,6 +8,10 @@ DEFINE FIELD keys ON TABLE projects FLEXIBLE TYPE option<array<string>>;
 -- indexes
 
 -- events
--- DEFINE EVENT project_log ON TABLE projects WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN (
---   CREATE logs SET index = $value.id, event = $event, time = time::now()
--- );
+DEFINE EVENT projects_log ON TABLE projects WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN {
+  IF $event = 'DELETE' {
+    CREATE logs SET index = $before.id, event = $event, time = time::now();
+  } ELSE {
+    CREATE logs SET index = $value.id, event = $event, time = time::now();
+  }
+};

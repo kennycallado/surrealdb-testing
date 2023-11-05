@@ -14,6 +14,14 @@ DEFINE FIELD question.*.content ON TABLE questions TYPE string;
 
 -- events
 DEFINE EVENT create_question ON TABLE questions WHEN $event = "CREATE" THEN {
-  LET $project = (SELECT value id FROM projects);
+  LET $project = (SELECT VALUE id FROM projects);
   RELATE $project->project_questions->$value;
+};
+
+DEFINE EVENT questions_log ON TABLE questions WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN {
+  IF $event = 'DELETE' {
+    CREATE logs SET index = $before.id, event = $event, time = time::now();
+  } ELSE {
+    CREATE logs SET index = $value.id, event = $event, time = time::now();
+  }
 };

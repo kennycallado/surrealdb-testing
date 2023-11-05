@@ -18,3 +18,10 @@ DEFINE FIELD slides ON TABLE resources TYPE option<array<record<slides>>>;
 -- indexes
 
 -- events
+DEFINE EVENT resources_log ON TABLE resources WHEN $event = "CREATE" OR $event = "UPDATE" OR $event = "DELETE" THEN {
+  IF $event = 'DELETE' {
+    CREATE logs SET index = $before.id, event = $event, time = time::now();
+  } ELSE {
+    CREATE logs SET index = $value.id, event = $event, time = time::now();
+  }
+};

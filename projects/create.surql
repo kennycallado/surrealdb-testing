@@ -3,4 +3,4 @@ CREATE projects CONTENT {
   keys: []
 };
 
-UPDATE <id> SET keys = ['step', 'mood']
+-- UPDATE <id> SET keys = ['step', 'mood']

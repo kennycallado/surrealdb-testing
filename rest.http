@@ -1,11 +1,21 @@
----
----
+###
+###
 
 GET http://root:root@localhost:8000/export
 Accept: application/json
 Content-Type: application/json
 NS: test
 DB: base
+
+POST http://root:root@localhost:8000/key/projects
+Accept: application/json
+Content-Type: application/json
+NS: test
+DB: base
+
+{
+  "name": "project 1"
+}
 
 POST http://localhost:8000/signup
 Accept: application/json
@@ -14,12 +24,12 @@ Accept: application/json
   "ns": "test",
   "db": "base",
   "sc": "user",
-  "project": "projects:qzq2vpdytdh89cgy4ge7",
-  "name": "Kenny Callado",
+  "name": "kenny",
   "email": "kenny@callado.es",
   "pass": "kenny"
 }
 
+# user
 POST http://localhost:8000/signin
 Accept: application/json
 
@@ -31,22 +41,46 @@ Accept: application/json
   "pass": "kenny"
 }
 
-GET http://localhost:8000/key/questions/
+# admin
+POST http://localhost:8000/signin
 Accept: application/json
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTg2MDQ5NzUsIm5iZiI6MTY5ODYwNDk3NSwiZXhwIjoxNjk4NjkxMzc1LCJpc3MiOiJTdXJyZWFsREIiLCJOUyI6InRlc3QiLCJEQiI6ImJhc2UiLCJTQyI6InVzZXIiLCJJRCI6InVzZXJzOjVrMHFpemV6aTZwZnBldHVzOHIyIn0.QvhlguuXHkxfYhN-xN-npe19aPn8pUekniCBHjR6Ek8qeELn7G01taR21vXyiiQb9iiOXmgyNRRzz9dQlTmNiw
 
-GET http://localhost:8000/key/resources/op353cup3abeerg1jskp
+{
+  "ns": "test",
+  "db": "base",
+  "sc": "admin",
+  "name": "admin",
+  "pass": "admin"
+}
+
+GET http://localhost:8000/key/users/
+
+GET http://localhost:8000/key/public_users
+Accept: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2OTkyMTIwNjYsIm5iZiI6MTY5OTIxMjA2NiwiZXhwIjoxNjk5Mjk4NDY2LCJpc3MiOiJTdXJyZWFsREIiLCJOUyI6InRlc3QiLCJEQiI6ImJhc2UiLCJTQyI6InVzZXIiLCJJRCI6InVzZXJzOmE5d2MwMW15OGtsMTh4aDQ0bzh1In0.Zu2H07fj9ojaNJwUNWxef7kZ_nactOSb3fKODw8dV9x22WqZB88rypkMLNSjM3yT4LpYCVy2zBx1-J1TrG97dw
+
+PATCH http://localhost:8000/key/users/
 Accept: application/json
 Authorization: Bearer 
 
+{
+  "role": "user"
+}
 
-curl -sSL --compressed -X 'POST' -H 'NS: test' -H 'DB: base' -H 'Accept: application/json' -H 'Authorization: Bearer '
 
-# POST http://root:root@localhost:8000/sql
-# Accept: application/json
-# NS: test
-# DB: base
+GET http://localhost:8000/key/questions/
+Accept: application/json
+Authorization: Bearer 
 
-# {
-#   "sql": "SELECT * FROM resources FETCH slides"
-# }
+---
+
+curl -sSL --compressed -X 'POST' -H 'NS: test' -H 'DB: base' -H 'Accept: application/json' -H 'Authorization: Bearer ' --data-raw '{"sql": "SELECT VALUE id FROM users "}' 'http://localhost:8000/sql'
+
+POST http://root:root@localhost:8000/sql
+Accept: application/json
+NS: test
+DB: base
+
+{
+  "sql": "SELECT * FROM users"
+}
